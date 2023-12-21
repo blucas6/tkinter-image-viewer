@@ -7,7 +7,7 @@ from math import floor
 def IM_loadImageList(folder):
     IMG_LIST = []
     for file in os.listdir(folder):
-        if file.endswith(".png") or file.endswith(".jpg"):
+        if file.endswith(".png") or file.endswith(".jpg") or file.endswith(".PNG"):
             IMG_LIST.append(os.path.join(file))
     IMG_LIST.sort()
     print(IMG_LIST)

@@ -9,23 +9,39 @@ from config import *
 
 class App(tk.Tk):
     def __init__(self):
-        tk.Tk.__init__(self)
+        self.win = tk.Tk.__init__(self)
 
         self.title("PhotoViewer")
 
-        container = tk.Frame(self)
-        container.pack()
+        self.container = tk.Frame(self)
+        self.container.pack()
 
-        container.grid_rowconfigure(0, weight=1)
-        container.grid_columnconfigure(0, weight=1)
+        self.container.grid_rowconfigure(0, weight=1)
+        self.container.grid_columnconfigure(0, weight=1)
 
-        self.frames = [HomePage(container, self), ViewPage(container, self), SlideshowPage(container, self)]
+        self.frames = [HomePage(self.container, self), ViewPage(self.container, self), SlideshowPage(self.container, self)]
         for f in self.frames:
             f.grid(row=0, column=0, sticky="nsew")
         
         self.showFrame("HOME")
+        # initialize the new_state
+        self.new_state = 'normal'
+
+        self.bind('<Configure>', self._resize_handler)
+
+    def _resize_handler(self, event):
+        self.old_state = self.new_state # assign the old state value
+        self.new_state = self.state() # get the new state value
+
+        if self.new_state == 'zoomed':
+            print('maximize event')
+        elif self.new_state == 'normal' and self.old_state == 'zoomed':
+            print('restore event')
+        else:
+            print('dragged resize event')
 
     def showFrame(self, ID):
+        print(self.winfo_width(), self.winfo_height())
         for f in self.frames:
             if f.ID == ID:
                 f.tkraise()

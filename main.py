@@ -5,7 +5,7 @@ from SlideshowPage import SlideshowPage
 import os
 from config import *
 
-# CREATE EXECUTABLE - $pyinstaller --onefile main.py
+# CREATE EXECUTABLE - $ pyinstaller --onefile main.py
 
 class App(tk.Tk):
     def __init__(self):
@@ -24,21 +24,7 @@ class App(tk.Tk):
             f.grid(row=0, column=0, sticky="nsew")
         
         self.showFrame("HOME")
-        # initialize the new_state
-        self.new_state = 'normal'
-
-        self.bind('<Configure>', self._resize_handler)
-
-    def _resize_handler(self, event):
-        self.old_state = self.new_state # assign the old state value
-        self.new_state = self.state() # get the new state value
-
-        if self.new_state == 'zoomed':
-            print('maximize event')
-        elif self.new_state == 'normal' and self.old_state == 'zoomed':
-            print('restore event')
-        else:
-            print('dragged resize event')
+    
 
     def showFrame(self, ID):
         print(self.winfo_width(), self.winfo_height())

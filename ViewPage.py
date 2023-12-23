@@ -1,11 +1,13 @@
 import tkinter as tk
 from tkinter import END, ttk
 import os
+from tkinter import filedialog
 from PIL import ImageTk, Image
 import random as rand
-
+from playsound import playsound
 from config import *
 from ImageDisplayer import *
+import shutil
 
 class ViewPage(tk.Frame):
     def __init__(self, parent, controller):
@@ -16,6 +18,13 @@ class ViewPage(tk.Frame):
         # TITLE
         l = ttk.Label(self, text="Saved Images")
         l.grid(row=0, column=2, pady=20)
+
+        # Play button
+        play_button = ttk.Button(self, text="Play Song", command=self.play)
+        play_button.grid(row=0, column=5)
+
+        add_song = ttk.Button(self, text="Add Song", command=self.addsound)
+        add_song.grid(row=0, column=6)
 
         # Back Button
         BACK = ttk.Button(self, text="Back to Home", command=lambda:[controller.showFrame("HOME"), self.hideCaptions()])
@@ -50,6 +59,20 @@ class ViewPage(tk.Frame):
         # Save caption button
         savecaption_b = ttk.Button(self, text="Save Caption", command=lambda:[self.saveCaptions()])
         savecaption_b.grid(row=0, column=0)
+
+    def addsound(self):
+        file = filedialog.askopenfile()
+        shortname = file.name.split("/").pop()
+        path = SOUND_DIR+'\\'+self.IMG_LIST[self.INDEX]+'.mp3'
+        if file:
+            print(file.name, SOUND_DIR, shortname)
+            shutil.copy(file.name, SOUND_DIR)
+            os.rename(SOUND_DIR+'\\'+shortname, SOUND_DIR+'\\'+self.IMG_LIST[self.INDEX]+'.mp3')
+
+    def play(self):
+        path = f'SavedImages/Sounds/{self.IMG_LIST[self.INDEX]}.mp3'
+        if os.path.exists(path):
+            playsound(path)
 
     def saveCaptions(self):
         if self.IMG_LIST:

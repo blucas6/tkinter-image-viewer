@@ -1,2 +1,6 @@
 # tkinter-image-viewer
-Simple image viewer in tkinter
+Simple image viewer and caption creator in tkinter
+
+## How to Use
+Run the application once so that it creates folders for you
+Place pictures inside the respective folders (either SavedImages or Slideshow)

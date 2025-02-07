@@ -2,7 +2,7 @@
 Simple image viewer and caption creator in tkinter
 
 ## Tags
-GUI, Desktop app, Simple
+GUI, Desktop app
 
 ## How to Use
 Run the application once so that it creates folders for you \
